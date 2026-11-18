@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Политика безопасности, которой хватает виджету (см. embed.html) -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src https: http://localhost:*; img-src 'self' https: http://localhost:* blob: data:; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="description" content="Бухгалтерия для ИП и ТОО в Алматы и Астане. Демо-сайт с ИИ-ассистентом AI-Dana." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Нота Есеп · бухгалтерия для малого бизнеса</title>
+    <style>
+      :root {
+        --ink: #13241f;
+        --ink-soft: #4b5d57;
+        --paper: #f3f6f2;
+        --paper-deep: #e6ece5;
+        --forest: #10291f;
+        --forest-2: #183a2d;
+        --brass: #d8c79a;
+        --line: rgb(19 36 31 / 0.12);
+        --serif: 'Iowan Old Style', 'Charter', 'Palatino Linotype', Georgia, serif;
+        --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font: 17px/1.6 var(--sans);
+        color: var(--ink);
+        background: var(--paper);
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+      }
+      .wrap {
+        width: min(1160px, 100% - 40px);
+        margin-inline: auto;
+      }
+
+      /* Hero: dark forest with grain, nav inside */
+      .hero {
+        position: relative;
+        color: #eef3ee;
+        background: linear-gradient(180deg, var(--forest) 0%, var(--forest-2) 100%);
+        overflow: hidden;
+      }
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.12;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+      .hero > * {
+        position: relative;
+        z-index: 1;
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        padding: 22px 0;
+      }
+      .brand {
+        font: 600 24px/1 var(--serif);
+        text-decoration: none;
+        letter-spacing: -0.01em;
+      }
+      .brand span {
+        color: var(--brass);
+      }
+      .links {
+        display: flex;
+        gap: 26px;
+        margin-left: auto;
+        font-size: 15px;
+      }
+      .links a {
+        text-decoration: none;
+        opacity: 0.78;
+        transition: opacity 0.15s;
+      }
+      .links a:hover {
+        opacity: 1;
+      }
+      .lang {
+        display: flex;
+        border: 1px solid rgb(238 243 238 / 0.25);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .lang button {
+        font: 600 13px/1 var(--sans);
+        color: inherit;
+        background: none;
+        border: 0;
+        padding: 8px 10px;
+        cursor: pointer;
+        opacity: 0.65;
+      }
+      .lang button[aria-pressed='true'] {
+        background: rgb(238 243 238 / 0.14);
+        opacity: 1;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 64px;
+        align-items: end;
+        min-height: calc(100svh - 80px);
+        padding: 48px 0 72px;
+      }
+      h1 {
+        font: 500 clamp(44px, 6vw, 78px) / 1.02 var(--serif);
+        letter-spacing: -0.02em;
+        margin: 0 0 28px;
+      }
+      h1 em {
+        color: var(--brass);
+      }
+      .lead {
+        font-size: 19px;
+        max-width: 30em;
+        opacity: 0.82;
+        margin: 0 0 36px;
+      }
+      .ask {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font: 600 16px/1 var(--sans);
+        color: var(--forest);
+        background: var(--brass);
+        border: 0;
+        border-radius: 10px;
+        padding: 17px 22px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .ask:hover {
+        background: #e7dab5;
+      }
+      .ask svg {
+        transition: transform 0.2s;
+      }
+      .ask:hover svg {
+        transform: translate(2px, -2px);
+      }
+      .ask-note {
+        display: block;
+        margin-top: 14px;
+        font-size: 14px;
+        opacity: 0.6;
+      }
+
+      /* Signature: the tax calendar, a real list, bleeding off the bottom */
+      .calendar {
+        background: var(--paper);
+        color: var(--ink);
+        border-radius: 14px 14px 0 0;
+        padding: 26px 28px 8px;
+        margin-bottom: -72px;
+        box-shadow: 0 -1px 0 rgb(255 255 255 / 0.4) inset;
+      }
+      .calendar header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 10px;
+      }
+      .calendar h2 {
+        font: 600 20px/1.2 var(--serif);
+        margin: 0;
+      }
+      .calendar header small {
+        color: var(--ink-soft);
+        font-size: 14px;
+      }
+      .calendar ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .calendar li {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        gap: 16px;
+        padding: 16px 0;
+        border-top: 1px solid var(--line);
+      }
+      .day {
+        font: 600 30px/1 var(--serif);
+        text-align: center;
+      }
+      .day small {
+        display: block;
+        font: 600 12px/1.6 var(--sans);
+        color: var(--ink-soft);
+      }
+      .calendar b {
+        display: block;
+        font-weight: 600;
+      }
+      .calendar span {
+        font-size: 15px;
+        color: var(--ink-soft);
+      }
+      .calendar li.soon .day {
+        color: #9a3b1f;
+      }
+
+      section {
+        padding: 140px 0 96px;
+      }
+      .services {
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: 64px;
+      }
+      h3 {
+        font: 500 clamp(32px, 3.6vw, 46px) / 1.1 var(--serif);
+        letter-spacing: -0.015em;
+        margin: 0;
+      }
+      .services dl {
+        margin: 0;
+      }
+      .services dt {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        font: 600 22px/1.3 var(--serif);
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+      }
+      .services dt span {
+        font: 500 16px/1.6 var(--sans);
+        color: var(--ink-soft);
+        white-space: nowrap;
+      }
+      .services dd {
+        margin: 6px 0 26px;
+        color: var(--ink-soft);
+        max-width: 34em;
+      }
+
+      .band {
+        background: var(--paper-deep);
+        padding: 88px 0;
+      }
+      .facts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+      }
+      .facts strong {
+        display: block;
+        font: 500 56px/1 var(--serif);
+        letter-spacing: -0.01em;
+        margin-bottom: 12px;
+      }
+      .facts p {
+        margin: 0;
+        color: var(--ink-soft);
+      }
+
+      .contact {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 64px;
+        align-items: start;
+      }
+      .contact p {
+        color: var(--ink-soft);
+        max-width: 32em;
+      }
+      .contact address {
+        font-style: normal;
+        line-height: 1.9;
+      }
+      .contact address a {
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      footer {
+        background: var(--forest);
+        color: rgb(238 243 238 / 0.7);
+        font-size: 14px;
+        padding: 36px 0;
+      }
+      footer .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 40px;
+      }
+
+      @media (max-width: 860px) {
+        .links {
+          display: none;
+        }
+        .lang {
+          margin-left: auto;
+        }
+        .hero-grid,
+        .services,
+        .contact {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .hero-grid {
+          min-height: 0;
+        }
+        .facts {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <nav class="wrap">
+        <a class="brand" href="#">Нота <span>Есеп</span></a>
+        <div class="links">
+          <a href="#services">Услуги</a>
+          <a href="#facts">О нас</a>
+          <a href="#contact">Контакты</a>
+        </div>
+        <div class="lang" role="group" aria-label="Язык ассистента">
+          <button type="button" data-lang="kk">KZ</button>
+          <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+      </nav>
+
+      <div class="wrap hero-grid">
+        <div>
+          <h1>Налоги сданы <em>вовремя</em></h1>
+          <p class="lead">
+            Ведём бухгалтерию ИП и ТОО на упрощёнке и общем режиме в Алматы и Астане. На вопросы про налоги отвечаем
+            сразу, даже ночью.
+          </p>
+          <button class="ask" type="button" data-action="open">
+            Спросить ассистента
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </button>
+          <small class="ask-note">ИИ-ассистент AI-Dana, бесплатно</small>
+        </div>
+
+        <aside class="calendar" aria-label="Налоговый календарь">
+          <header>
+            <h2>Ближайшие сроки</h2>
+            <small>2026–2027</small>
+          </header>
+          <ol>
+            <li class="soon">
+              <div class="day">15<small>ноя</small></div>
+              <div>
+                <b>ФНО 200.00 и 300.00</b>
+                <span>ИПН и соцплатежи, НДС за 3 квартал</span>
+              </div>
+            </li>
+            <li>
+              <div class="day">25<small>ноя</small></div>
+              <div>
+                <b>Уплата НДС за 3 квартал</b>
+                <span>Для плательщиков НДС на общем режиме</span>
+              </div>
+            </li>
+            <li>
+              <div class="day">15<small>фев</small></div>
+              <div>
+                <b>ФНО 910.00 за 2 полугодие</b>
+                <span>Упрощённая декларация ИП и ТОО</span>
+              </div>
+            </li>
+            <li>
+              <div class="day">25<small>фев</small></div>
+              <div>
+                <b>Уплата налогов по 910.00</b>
+                <span>ИПН и социальный налог за полугодие</span>
+              </div>
+            </li>
+          </ol>
+        </aside>
+      </div>
+    </div>
+
+    <section id="services">
+      <div class="wrap services">
+        <h3>Что берём на себя</h3>
+        <dl>
+          <dt>Бухгалтерия под ключ <span>от 45 000 ₸ / мес</span></dt>
+          <dd>Первичка, зарплата, ФНО, ответы на уведомления КГД. Один бухгалтер ведёт вас с первого дня.</dd>
+          <dt>Регистрация ИП и ТОО <span>от 30 000 ₸</span></dt>
+          <dd>Подберём режим налогообложения, откроем счёт, поставим на учёт по НДС, если нужно.</dd>
+          <dt>Восстановление учёта <span>по оценке</span></dt>
+          <dd>Разберём запущенные периоды, сдадим пропущенные декларации и посчитаем, сколько это стоит.</dd>
+          <dt>Разовая консультация <span>15 000 ₸ / час</span></dt>
+          <dd>Сделка, проверка, смена режима. Простые вопросы ассистент закрывает бесплатно.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <div class="band" id="facts">
+      <div class="wrap facts">
+        <div>
+          <strong>340</strong>
+          <p>клиентов на обслуживании, от кофейни до дистрибьютора</p>
+        </div>
+        <div>
+          <strong>0 ₸</strong>
+          <p>штрафов за просрочку у клиентов в 2025 году</p>
+        </div>
+        <div>
+          <strong>24/7</strong>
+          <p>ответы на вопросы через ИИ-ассистента на сайте</p>
+        </div>
+      </div>
+    </div>
+
+    <section id="contact">
+      <div class="wrap contact">
+        <div>
+          <h3>Расскажите о бизнесе</h3>
+          <p>Позвоните или напишите, посчитаем стоимость за один разговор. Если вопрос срочный, задайте его ассистенту.</p>
+        </div>
+        <address>
+          <a href="tel:+77270000000">+7 727 000 00 00</a><br />
+          <a href="mailto:hello@nota-esep.example">hello@nota-esep.example</a><br />
+          Алматы, ул. Примерная, 10<br />
+          Пн–Пт, 9:00–18:00
+        </address>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <span>© 2026 Нота Есеп</span>
+        <span>Демо-сайт для показа виджета AI-Dana. Компания вымышленная. <a href="./embed.html">Как подключён ассистент</a></span>
+      </div>
+    </footer>
+
+    <!--
+      Виджет AI-Dana подключён так же, как на любом стороннем сайте: тег скрипта и элемент.
+      @1 — всегда актуальная версия; адрес бэкенда уже зашит в виджет.
+    -->
+    <script src="./site.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@dsrcjs/ai-widget@1/dist/ai-dana-chat.js" defer></script>
+    <ai-dana-chat launcher lang="ru"></ai-dana-chat>
+  </body>
+</html>
