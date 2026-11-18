@@ -2,11 +2,6 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <!-- Политика безопасности, которой хватает виджету (см. embed.html) -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src https://dev-ai.kgd.gov.kz http://localhost:* http://127.0.0.1:*; img-src 'self' https://dev-ai.kgd.gov.kz http://localhost:* http://127.0.0.1:* blob: data:; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'"
-    />
     <meta name="description" content="Бухгалтерия для ИП и ТОО в Алматы и Астане. Демо-сайт с ИИ-ассистентом AI-Dana." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Нота Есеп · бухгалтерия для малого бизнеса</title>
@@ -91,26 +86,6 @@
       .links a:hover {
         opacity: 1;
       }
-      .lang {
-        display: flex;
-        border: 1px solid rgb(238 243 238 / 0.25);
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .lang button {
-        font: 600 13px/1 var(--sans);
-        color: inherit;
-        background: none;
-        border: 0;
-        padding: 8px 10px;
-        cursor: pointer;
-        opacity: 0.65;
-      }
-      .lang button[aria-pressed='true'] {
-        background: rgb(238 243 238 / 0.14);
-        opacity: 1;
-      }
-
       .hero-grid {
         display: grid;
         grid-template-columns: 1.15fr 1fr;
@@ -132,28 +107,6 @@
         max-width: 30em;
         opacity: 0.82;
         margin: 0 0 36px;
-      }
-      .ask {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        font: 600 16px/1 var(--sans);
-        color: var(--forest);
-        background: var(--brass);
-        border: 0;
-        border-radius: 10px;
-        padding: 17px 22px;
-        cursor: pointer;
-        transition: background 0.15s;
-      }
-      .ask:hover {
-        background: #e7dab5;
-      }
-      .ask svg {
-        transition: transform 0.2s;
-      }
-      .ask:hover svg {
-        transform: translate(2px, -2px);
       }
       .ask-note {
         display: block;
@@ -308,9 +261,6 @@
         .links {
           display: none;
         }
-        .lang {
-          margin-left: auto;
-        }
         .hero-grid,
         .services,
         .contact {
@@ -335,11 +285,6 @@
           <a href="#facts">О нас</a>
           <a href="#contact">Контакты</a>
         </div>
-        <div class="lang" role="group" aria-label="Язык ассистента">
-          <button type="button" data-lang="kk">KZ</button>
-          <button type="button" data-lang="ru" aria-pressed="true">RU</button>
-          <button type="button" data-lang="en">EN</button>
-        </div>
       </nav>
 
       <div class="wrap hero-grid">
@@ -349,13 +294,7 @@
             Ведём бухгалтерию ИП и ТОО на упрощёнке и общем режиме в Алматы и Астане. На вопросы про налоги отвечаем
             сразу, даже ночью.
           </p>
-          <button class="ask" type="button" data-action="open">
-            Спросить ассистента
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-            </svg>
-          </button>
-          <small class="ask-note">ИИ-ассистент AI-Dana, бесплатно</small>
+          <small class="ask-note">Вопросы про налоги — ИИ-ассистенту AI-Dana, в чате внизу справа</small>
         </div>
 
         <aside class="calendar" aria-label="Налоговый календарь">
@@ -448,15 +387,11 @@
     <footer>
       <div class="wrap">
         <span>© 2026 Нота Есеп</span>
-        <span>Демо-сайт для показа виджета AI-Dana. Компания вымышленная. <a href="./embed.html">Как подключён ассистент</a></span>
+        <span>Демо-сайт для показа виджета AI-Dana. Компания вымышленная.</span>
       </div>
     </footer>
 
-    <!--
-      Виджет AI-Dana подключён так же, как на любом стороннем сайте: тег скрипта и элемент.
-      @1 — всегда актуальная версия; адрес бэкенда уже зашит в виджет.
-    -->
-    <script src="./site.js" defer></script>
+    <!-- Виджет AI-Dana -->
     <script src="https://cdn.jsdelivr.net/npm/@dsrcjs/ai-widget@1/dist/ai-dana-chat.js" defer></script>
     <ai-dana-chat launcher lang="ru"></ai-dana-chat>
   </body>
