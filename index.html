@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="description" content="Бухгалтерия для ИП и ТОО в Алматы и Астане. Демо-сайт с ИИ-ассистентом AI-Dana." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Скрипт виджета только с jsDelivr, запросы только к AI-Dana. frame-ancestors в meta браузер игнорирует:
+         запрет встраивания в iframe приходит заголовком из vercel.json, здесь он для сканера и как напоминание -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://dev-ai-dana.kgd.gov.kz https://ai-dana.kgd.gov.kz; media-src 'self' https://dev-ai-dana.kgd.gov.kz https://ai-dana.kgd.gov.kz; font-src 'self' data:; connect-src 'self' https://dev-ai-dana.kgd.gov.kz https://ai-dana.kgd.gov.kz https://data.jsdelivr.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
     <title>Нота Есеп · бухгалтерия для малого бизнеса</title>
     <style>
       :root {
